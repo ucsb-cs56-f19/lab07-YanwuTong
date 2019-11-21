@@ -32,6 +32,7 @@
       <table>
         <thead>
           <tr>
+	    <th>Title</th>
             <th>Type</th>
 	    <th>Url</th>
             <th>Count</th>
@@ -39,6 +40,7 @@
         </thead>
         <tbody>
           <tr>
+	    <td th:text="${featureCollection.metadata.title}"></td>
             <td th:text="${featureCollection.type}"></td>
 	    <td th:text="${featureCollection.metadata.url}"></td>
             <td th:text="${featureCollection.metadata.count}"></td>
