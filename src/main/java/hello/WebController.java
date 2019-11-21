@@ -1,5 +1,5 @@
-package hello;
 
+package hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -11,11 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.Map;
 import java.util.HashMap;
-
-import com.nimbusds.oauth2.sdk.client.ClientReadRequest;
-
 import hello.geojson.FeatureCollection;
 
+import com.nimbusds.oauth2.sdk.client.ClientReadRequest;
 
 @Controller
 public class WebController {
@@ -34,7 +32,8 @@ public class WebController {
         Map<String, String> urls = new HashMap<>();
 
         // get around an unfortunate limitation of the API
-        @SuppressWarnings("unchecked") Iterable<ClientRegistration> iterable = ((Iterable<ClientRegistration>) clientRegistrationRepository);
+        @SuppressWarnings("unchecked")
+        Iterable<ClientRegistration> iterable = ((Iterable<ClientRegistration>) clientRegistrationRepository);
         iterable.forEach(clientRegistration -> urls.put(clientRegistration.getClientName(),
                 "/oauth2/authorization/" + clientRegistration.getRegistrationId()));
 
@@ -55,26 +54,20 @@ public class WebController {
     }
 
     @GetMapping("/earthquakes/search")
-    public String getEarthquakesSearch(Model model, OAuth2AuthenticationToken oAuth2AuthenticationToken, EqSearch eqSeatch){
-	return "earthquakes/search";
+    public String getEarthquakesSearch(Model model, OAuth2AuthenticationToken oAuth2AuthenticationToken,
+            EqSearch eqSearch) {
+        return "earthquakes/search";
     }
 
     @GetMapping("/earthquakes/results")
-    public String getEarthquakesResults(Model model, OAuth2AuthenticationToken oAuth2AuthenticationToken,EqSearch eqSearch) {
-
-	EarthquakeQueryService e = new EarthquakeQueryService();
-	
+    public String getEarthquakesResults(Model model, OAuth2AuthenticationToken oAuth2AuthenticationToken,
+            EqSearch eqSearch) {
+        EarthquakeQueryService e = new EarthquakeQueryService();
         model.addAttribute("eqSearch", eqSearch);
-
-	String json = e.getJSON(eqSearch.getDistance(), eqSearch.getMinmag());
+        String json = e.getJSON(eqSearch.getDistance(), eqSearch.getMinmag());
         model.addAttribute("json", json);
-
-	FeatureCollection featureCollection = FeatureCollection.fromJSON(json);
+        FeatureCollection featureCollection = FeatureCollection.fromJSON(json);
         model.addAttribute("featureCollection",featureCollection);
-
-
-	
         return "earthquakes/results";
     }
-	
 }
