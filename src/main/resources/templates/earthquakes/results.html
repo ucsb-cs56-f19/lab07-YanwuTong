@@ -1,75 +1,73 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"> 
-  <head>
-    <title>Earthquake Search Results</title>
-    <div th:replace="bootstrap/bootstrap_head.html"></div>
-  </head>
-  <body>
-    <div class="container">
-      <div th:replace="bootstrap/bootstrap_nav_header.html"></div>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-      <h1>Earthquake Search</h1>
+<head>
+  <title>Earthquake Search Results</title>
+  <div th:replace="bootstrap/bootstrap_head.html"></div>
+</head>
 
-      <table>
-        <tr>
-          <th>Distance (km)</th>
-          <td th:text="${eqSearch.distance}"></td>
-        </tr>
-        <tr>
-          <th>Minimum Magnitude</th>
-          <td th:text="${eqSearch.minmag}"></td>
-        </tr>
-      </table>
+<body>
+  <div class="container">
+    <div th:replace="bootstrap/bootstrap_nav_header.html"></div>
 
-      <h2>JSON Results</h2>
+    <h1>Earthquake Search Results</h1>
 
-      <pre th:text="${json}">This is placeholder</pre>
+    <!-- <table>
+      <tr>
+        <th>Distance (km)</th>
+        <td th:text="${eqSearch.distance}"></td>
+      </tr>
+      <tr>
+        <th>Minimum Magnitude</th>
+        <td th:text="${eqSearch.minmag}"></td>
+      </tr>
+    </table> -->
 
-      
 
-      <h2> Results</h2>
+    <h2>Results</h2>
 
-      <table>
-        <thead>
+    <table class="table">.
+      <thead>
           <tr>
-	    <th>Title</th>
-            <th>Type</th>
-	    <th>Url</th>
-            <th>Count</th>
+              <th>Title</th>
+              <th>Count</th>
+              <th>Distance (km)</th>
+              <th>Minimum Magnitude</th>
           </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
           <tr>
-	    <td th:text="${featureCollection.metadata.title}"></td>
-            <td th:text="${featureCollection.type}"></td>
-	    <td th:text="${featureCollection.metadata.url}"></td>
-            <td th:text="${featureCollection.metadata.count}"></td>
+              <td><a th:href="${featureCollection.metadata.url}" th:text="${featureCollection.metadata.title}"></a></td>       
+              <td th:text="${featureCollection.metadata.count}"></td>
+              <td th:text="${eqSearch.distance}"></td>
+              <td th:text="${eqSearch.minmag}"></td>
           </tr>
-        </tbody>
-      </table>
+      </tbody>
+  </table>
 
-
-      <div th:replace="bootstrap/bootstrap_footer.html"></div>
-
-      <h3>Earthquakes</h3>
-      <table>
-        <thead>
+  <h3>Earthquakes</h3>
+  <table>
+      <thead>
           <tr>
-            <th>id</th>
-            <th>place</th>
-            <th>mag</th>
+              <th>id</th>
+              <th>place</th>
+              <th>mag</th>
           </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
           <tr th:each="f: ${featureCollection.features}"> 
-            <td th:text="${f.id}"></td>
-            <td th:text="${f.properties.place}"></td>
-            <td th:text="${f.properties.mag}"></td>
+              <td><a th:href="${f.properties.url}" th:text="${f.id}"></a></td>
+              <td th:text="${f.properties.place}"></td>
+              <td th:text="${f.properties.mag}"></td>
           </tr>
-        </tbody>
-      </table>
-      
-    </div>
-    <div th:replace="bootstrap/bootstrap_scripts.html"></div>  
-  </body>
+      </tbody>
+  </table>
+
+
+    <div th:replace="bootstrap/bootstrap_footer.html"></div>
+  </div>
+  <div th:replace="bootstrap/bootstrap_scripts.html"></div>
+</body>
+
 </html>
+ 
