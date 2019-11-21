@@ -1,13 +1,11 @@
 package hello;
 
-
 import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.web.client.RestTemplate;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,16 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
-
 public class EarthquakeQueryService {
 
     private Logger logger = LoggerFactory.getLogger(EarthquakeQueryService.class);
 
     public String getJSON(int distance, int minmag) {
-
-	 RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
+        RestTemplate restTemplate = new RestTemplate();
+	    HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -43,7 +38,7 @@ public class EarthquakeQueryService {
         logger.info("url=" + url);
 
         String retVal="";
-        try {   
+        try {
             ResponseEntity<String> re = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
              MediaType contentType = re.getHeaders().getContentType();
             HttpStatus statusCode = re.getStatusCode();
@@ -55,4 +50,4 @@ public class EarthquakeQueryService {
         return retVal;
     }
 
-} 
+}
